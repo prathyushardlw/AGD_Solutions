@@ -1,0 +1,25 @@
+{
+  "name": "agd-solutions-website",
+  "version": "1.0.0",
+  "description": "AGD Solutions LLC - Healthcare Practice Consulting Website",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report tests/playwright-report",
+    "test:debug": "playwright test --debug",
+    "backend": "cd backend && npm start",
+    "backend:dev": "cd backend && npm run dev"
+  },
+  "keywords": [
+    "healthcare",
+    "consulting",
+    "website"
+  ],
+  "author": "AGD Solutions LLC",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.45.0",
+    "@types/node": "^20.14.10"
+  }
+}

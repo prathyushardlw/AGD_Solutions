@@ -103,9 +103,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // ==========================================
     const contactForm = document.getElementById('contactForm');
     
+    // API Configuration - Update this URL when deploying
+    const API_URL = window.location.hostname === 'localhost' || 
+                    window.location.hostname === '127.0.0.1' || 
+                    window.location.protocol === 'file:'
+        ? 'http://localhost:5000/api'  // Development
+        : 'https://your-backend-url.com/api';  // Production - UPDATE THIS!
+    
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+            
+            // Disable submit button to prevent double submission
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
             
             // Get form data
             const formData = {
@@ -121,6 +134,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Basic validation
             if (!formData.name || !formData.email || !formData.interest) {
                 showFormMessage('Please fill in all required fields.', 'error');
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
                 return;
             }
             
@@ -128,18 +143,42 @@ document.addEventListener('DOMContentLoaded', function() {
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(formData.email)) {
                 showFormMessage('Please enter a valid email address.', 'error');
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
                 return;
             }
             
-            // Here you would typically send the data to your server
-            // For now, we'll just show a success message
-            console.log('Form submitted:', formData);
-            
-            // Show success message
-            showFormMessage('Thank you for your inquiry! We will contact you within 24 hours.', 'success');
-            
-            // Reset form
-            contactForm.reset();
+            try {
+                // Send data to backend API
+                const response = await fetch(`${API_URL}/contact`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    // Show success message
+                    showFormMessage(result.message || 'Thank you for your inquiry! We will contact you within 24 hours.', 'success');
+                    
+                    // Reset form
+                    contactForm.reset();
+                } else {
+                    // Show error message from server
+                    showFormMessage(result.message || 'An error occurred. Please try again.', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Form submission error:', error);
+                showFormMessage('Unable to submit form. Please check your connection and try again, or email us directly at info@agdsolutions.com', 'error');
+            } finally {
+                // Re-enable submit button
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+            }
         });
     }
     
