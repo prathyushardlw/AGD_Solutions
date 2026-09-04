@@ -33,7 +33,7 @@ module.exports = defineConfig({
   // Shared settings for all the projects below
   use: {
     // Base URL to use in actions like `await page.goto('/')`
-    baseURL: 'file:///D:/D_Drive/AGD Solutions Website Development/index.html',
+    baseURL: 'file:///D:/D_Drive/AGD Solutions Website Development/frontend/index.html',
     
     // Collect trace when retrying the failed test
     trace: 'on-first-retry',

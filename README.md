@@ -4,21 +4,34 @@ A professional, responsive website for AGD Solutions LLC - Healthcare Practice C
 
 ## 🚀 Quick Start
 
-1. Open `index.html` in your web browser
-2. The website is ready to use immediately - no installation required!
+### Local Development:
+1. Open `frontend/index.html` in your web browser
+2. For backend: `cd backend` → `npm install` → `npm start`
+
+### Deployment:
+See [DEPLOYMENT.md](DEPLOYMENT.md) for complete deployment instructions.
 
 ## 📁 Project Structure
 
 ```
-AGD Solutions Website Development/
-├── index.html                      # Main HTML file
-├── css/
-│   └── style.css                  # All styling
-├── js/
-│   └── script.js                  # Interactive functionality
-├── AGD Logo circle 2026a.png      # Circular logo
-├── Logo shape AGD Diana rose gold black background.png
-└── README.md                      # This file
+AGD_Solutions/
+├── frontend/                       # Deploy to Netlify/Vercel
+│   ├── index.html                 # Main website
+│   ├── admin.html                 # Admin dashboard
+│   ├── css/
+│   │   └── style.css              # All styling
+│   ├── js/
+│   │   └── script.js              # Interactive functionality
+│   └── *.png                      # Logo files
+│
+├── backend/                        # Deploy to Render/Railway
+│   ├── server.js                  # Express API server
+│   ├── package.json               # Dependencies
+│   └── .env                       # Environment variables (not in git)
+│
+├── tests/                          # Playwright tests
+├── DEPLOYMENT.md                   # Deployment guide
+└── README.md                       # This file
 ```
 
 ## ✨ Features
